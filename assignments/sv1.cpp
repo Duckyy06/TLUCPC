@@ -1,8 +1,13 @@
 #include <iostream>
 using namespace std;
+
+int add(){
+    int a = 5;
+    int b = 10;
+    return a + b;
+}
+
 int main() {
-    int a = 10;
-    int b = 20;
-    cout << a + b;
+    cout<< add();
     return 0;
 }

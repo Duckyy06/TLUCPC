@@ -1,8 +1,13 @@
 #include <iostream>
 using namespace std;
+
+int cong(){
+    int x = 7;
+    int y = 3;
+    return x + y;
+}
+
 int main() {
-    string a = "1";
-    string b = "2";
-    cout << a + b;
+    cout<< cong();
     return 0;
 }

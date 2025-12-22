@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>QUẢN TRỊ VIÊN</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        /* CSS cho ô Mật khẩu */
+        .password-container { position: relative; width: 100%; }
+        .password-container input {
+            width: 100%; padding-right: 30px; border: none; background: transparent;
+            color: #007bff; font-family: monospace; font-weight: bold;
+        }
+        .password-container input:focus { outline: none; }
+        .password-container i {
+            position: absolute; right: 0px; top: 50%; transform: translateY(-50%);
+            cursor: pointer; color: #6c757d;
+        }
+
+        /* --- CSS MỚI: TĂNG KÍCH THƯỚC CỘT VAI TRÒ --- */
+        .role-large {
+            font-size: 1.1rem; /* Tăng cỡ chữ lên khoảng 17-18px */
+            padding: 8px 12px; /* Tăng khoảng cách đệm để nút to hơn */
+            font-weight: 600;  /* Chữ đậm hơn chút */
+        }
+
+        .table td, .table th { vertical-align: middle; }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-dark bg-danger">
+        <span class="navbar-brand">QUẢN TRỊ VIÊN</span>
+        <a href="/logout" class="btn btn-light btn-sm text-danger">Đăng xuất</a>
+    </nav>
+
+    <div class="container mt-4 bg-white p-4 shadow rounded">
+        <h4 class="mb-4">Quản lý Tài khoản Hệ thống</h4>
+        
+        <div class="card mb-4">
+            <div class="card-header bg-light"><b>Thêm tài khoản mới</b></div>
+            <div class="card-body">     
+                <form method="POST" class="form-inline">
+                    <input type="text" name="username" class="form-control mr-2" placeholder="Tên tài khoản" required>
+                    <input type="text" name="password" class="form-control mr-2" placeholder="Mật khẩu" required>
+                    <select name="role" class="form-control mr-2">
+                        <option value="student">Sinh viên</option>
+                        <option value="lecturer">Giảng viên</option>
+                    </select>
+                    <button type="submit" class="btn btn-success">Thêm</button>
+                </form>
+                {% if error %}<p class="text-danger mt-2">{{ error }}</p>{% endif %}
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th style="width: 30%;">Tài khoản</th>
+                    <th style="width: 30%;">Mật khẩu</th>
+                    <th style="width: 30%;">Vai trò</th>
+                    <th style="width: 1%; white-space: nowrap;">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u, info in users.items() %}
+                <tr>
+                    <td>{{ u }}</td>
+                    
+                    <td>
+                        <div class="password-container">
+                            <input type="password" id="pass_{{ u }}" value="{{ info.password }}" readonly>
+                            <i class="far fa-eye" id="toggle_{{ u }}" onclick="togglePassword('pass_{{ u }}', 'toggle_{{ u }}')"></i>
+                        </div>
+                    </td>
+                    
+                    <td>
+                        {% if info.role == 'admin' %} 
+                            <span class="badge badge-danger role-large">Admin</span>
+                        {% elif info.role == 'lecturer' %} 
+                            <span class="badge badge-warning role-large">Giảng viên</span>
+                        {% else %} 
+                            <span class="badge badge-primary role-large">Sinh viên</span>
+                        {% endif %}
+                    </td>
+                    
+                    <td class="text-center">
+                        {% if u != my_user and u != 'admin' %}
+                            <a href="/delete_user/{{ u }}" class="btn btn-sm btn-danger" onclick="return confirm('Xóa user này?')">Xóa</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function togglePassword(inputId, iconId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                input.type = "password";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            }
+        }
+    </script>
+</body>
+</html>

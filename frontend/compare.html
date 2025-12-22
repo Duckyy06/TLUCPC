@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>So sánh chi tiết</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body { padding: 20px; background: #f8f9fa; }
+        
+        .comparison-table { 
+            width: 100%; border-collapse: collapse; font-family: 'Consolas', monospace; 
+            font-size: 17px; /* Giữ nguyên cỡ chữ bạn đã chỉnh */
+            table-layout: fixed; background: white; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+        }
+        
+        .comparison-table td { 
+            padding: 2px 5px; border: 1px solid #ddd; word-wrap: break-word; vertical-align: top; 
+        }
+        
+        .num { 
+            width: 40px; color: #999; text-align: right; background: #f1f1f1; 
+            user-select: none; border-right: 1px solid #ddd; 
+        }
+        
+        .code { width: 45%; white-space: pre-wrap; }
+
+        /* --- MỚI: TẠO KHOẢNG CÁCH (VÁCH NGĂN) GIỮA 2 FILE --- */
+        /* Chọn cột thứ 2 (Cột code của File 1) và thêm viền phải dày */
+        .comparison-table td:nth-child(2) {
+            border-right: 10px solid #e9ecef; /* Màu xám nhạt, dày 10px */
+        }
+        
+        /* Tô màu Highlight */
+        .match { background-color: #fff59d; } /* Vàng: Giống nhau */
+        .diff { background-color: #f8f9fa; color: #aaa; } /* Xám: Khác nhau */
+        
+        .header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: white; padding: 15px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    </style>
+</head>
+<body>
+    <div class="header-bar">
+        <div>
+            <h4 class="mb-0">So sánh chi tiết</h4>
+            <div class="text-danger font-weight-bold" style="font-size: 1.2em;">Phần trăm trùng lặp: {{ score }}%</div>
+        </div>
+        <div>
+            <a href="/scan" class="btn btn-primary">Đóng</a>
+        </div>
+    </div>
+    
+    <table class="comparison-table">
+        <thead>
+            <tr class="bg-primary text-white text-center">
+                <th colspan="2" class="p-2" style="border-right: 10px solid #fff;">
+                    {{ f1 }}
+                </th>
+                <th colspan="2" class="p-2">
+                    {{ f2 }}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            <tr class="{{ row.class }}">
+                <td class="num">{{ row.num1 }}</td>
+                <td class="code">{{ row.txt1 }}</td>
+                <td class="num">{{ row.num2 }}</td>
+                <td class="code">{{ row.txt2 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

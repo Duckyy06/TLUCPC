@@ -1,6 +1,5 @@
 def cong():
-    a = 5
+    a = "Hello"
     b = 15
-    return a + b
-ketqua = cong()
-print(ketqua)
+    return a, b
+print(cong())

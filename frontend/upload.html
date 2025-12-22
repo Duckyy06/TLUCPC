@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Nộp bài tập</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="card p-5 shadow">
+            <h2 class="text-center text-primary mb-4">Nộp Bài Tập</h2>
+            <p class="text-center text-muted">Các file nộp sẽ được tự động gắn tên tài khoản của bạn.</p>
+            
+            <form method="POST" enctype="multipart/form-data" class="text-center border p-5 rounded bg-white">
+                <div class="form-group">
+                    <input type="file" name="files" multiple required class="form-control-file border p-2">
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg px-5">Tải lên</button>
+            </form>
+            
+            <div class="text-center mt-3">
+                <a href="/dashboard" class="btn btn-link">Quay lại</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
